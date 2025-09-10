@@ -1,0 +1,53 @@
+<div class="max-w-2xl mx-auto p-6 bg-white shadow rounded-lg">
+  <h1 class="text-2xl font-bold mb-6">New Task</h1>
+
+  <%= form_with(model: @project, url: projects_path, local: true, class: "space-y-4") do |f| %>
+    <div>
+      <%= f.label :title, class: "block font-medium mb-1" %>
+      <%= f.text_field :title, class: "w-full border rounded px-3 py-2 focus:ring focus:ring-blue-300" %>
+    </div>
+
+    <div>
+      <%= f.label :description, class: "block font-medium mb-1" %>
+      <%= f.text_area :description, class: "w-full border rounded px-3 py-2 focus:ring focus:ring-blue-300" %>
+    </div>
+
+    <div>
+      <%= f.label :due_date, class: "block font-medium mb-1" %>
+      <%= f.date_field :due_date, class: "w-full border rounded px-3 py-2 focus:ring focus:ring-blue-300" %>
+    </div>
+
+    <div>
+    <%= f.label :priority_level, class: "block font-medium mb-1" %>
+    <%= f.select :priority_level, Project.priority_levels.keys.map { |k| [k.titleize, k] }, {}, class: "w-full border rounded px-3 py-2 focus:ring focus:ring-blue-300" %>
+    </div>
+
+    <div>
+      <%= f.label :category, class: "block font-medium mb-1" %>
+      <%= f.text_field :category, class: "w-full border rounded px-3 py-2 focus:ring focus:ring-blue-300" %>
+    </div>
+
+    <div>
+      <%= f.label :status, class: "block font-medium mb-1" %>
+      <%= f.select :status, Project.statuses.keys.map { |k| [k.titleize, k] }, { prompt: "Select Status" }, class: "w-full border rounded px-3 py-2 focus:ring focus:ring-blue-300" %>
+    </div>
+
+
+    <div>
+      <%= f.label :user_id, "Assigned To", class: "block text-sm font-semibold text-gray-700" %>
+      <%= f.select :user_id, options_from_collection_for_select(@employees, :id, :name, @project.user_id), { prompt: "Select Employee" }, class: "w-full border rounded px-3 py-2 focus:ring focus:ring-blue-300" %>
+    </div>
+
+    <div class="flex items-center space-x-4">
+        <%= f.submit "Create Task", class: "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700" %>
+
+        <% if current_user.admin? %>
+            <%= link_to "Admin Panel", admin_dashboard_index_path, class: "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700" %>
+        <% elsif current_user.employee? %>
+            <%= link_to "Employee Panel", employee_dashboard_index_path, class: "px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700" %>
+        <% end %>
+    </div>
+
+    
+  <% end %>
+</div>

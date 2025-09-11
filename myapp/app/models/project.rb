@@ -1,4 +1,7 @@
 class Project < ApplicationRecord
+
+  before_save :set_status_based_on_due_date
+
   enum :priority_level, { low: 0, medium: 1, high: 2 }
   enum :status, { pending: "pending", completed: "completed" , overdue: "overdue"}, prefix: true
 
@@ -47,5 +50,16 @@ class Project < ApplicationRecord
     projects
   end
 
+    private
+
+  def set_status_based_on_due_date
+    return unless due_date.present?
+
+    if due_date < Date.today
+      self.status = "overdue"
+    elsif status != "completed" 
+      self.status = "pending"
+    end
+  end
 
 end

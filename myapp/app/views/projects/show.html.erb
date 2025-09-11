@@ -1,6 +1,3 @@
-<%= link_to "Back", (current_user.admin? ? admin_dashboard_index_path : employee_dashboard_index_path),
-      class: "inline-block px-5 py-2 bg-gray-500 text-white font-semibold rounded-lg shadow hover:bg-gray-600 transition-colors duration-200" %>
-
 <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8 mt-8">
 
   <h1 class="text-3xl font-bold mb-6 text-gray-800"><%= @project.title %></h1>

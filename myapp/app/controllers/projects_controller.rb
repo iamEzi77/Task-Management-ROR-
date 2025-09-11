@@ -27,9 +27,9 @@ class ProjectsController < ApplicationController
       @project = Project.new(project_params)
       if @project.save
         if current_user.admin?
-          redirect_to admin_dashboard_index_path, notice: "Project created successfully."
+          redirect_to projects_path, notice: "Project created successfully."
         else
-          redirect_to employee_dashboard_index_path, notice: "Project created successfully."
+          redirect_to projects_path, notice: "Project created successfully."
         end
       else
         render :new

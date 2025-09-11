@@ -3,16 +3,17 @@
 
     <div>
       <%= f.label :status, "Status", class: "block text-sm font-medium text-gray-700 mb-1" %>
-      <%= f.select :status, [["Completed", "completed"], ["Pending", "pending"]],
+      <%= f.select :status,
+          [["Completed", "completed"], ["Pending", "pending"]],
           { include_blank: "All" },
-          class: "w-full border rounded px-3 py-2" %>
+          { class: "w-full border rounded px-3 py-2", selected: params[:status] } %>
     </div>
-
     <div>
       <%= f.label :priority_level, "Priority", class: "block text-sm font-medium text-gray-700 mb-1" %>
-      <%= f.select :priority_level, [["High", "high"], ["Medium", "medium"], ["Low", "low"]],
+      <%= f.select :priority_level,
+          [["High", "high"], ["Medium", "medium"], ["Low", "low"]],
           { include_blank: "All" },
-          class: "w-full border rounded px-3 py-2" %>
+          { class: "w-full border rounded px-3 py-2", selected: params[:priority_level] } %>
     </div>
 
     <div>

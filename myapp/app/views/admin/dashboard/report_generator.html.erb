@@ -1,0 +1,27 @@
+<div class="max-w-3xl mx-auto bg-white shadow-lg rounded-2xl p-6">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6">
+    <%= @employee.name %> - Performance Report
+  </h2>
+
+  <ul class="space-y-4">
+    <li class="flex items-center justify-between p-4 bg-gray-50 rounded-xl shadow-sm">
+      <span class="text-gray-700 font-medium">Total Projects</span>
+      <span class="text-gray-900 font-semibold"><%= @report[:total_projects] %></span>
+    </li>
+
+    <li class="flex items-center justify-between p-4 bg-green-50 rounded-xl shadow-sm">
+      <span class="text-green-700 font-medium">Completed Projects</span>
+      <span class="text-green-900 font-semibold"><%= @report[:completed_projects] %></span>
+    </li>
+
+    <li class="flex items-center justify-between p-4 bg-yellow-50 rounded-xl shadow-sm">
+      <span class="text-yellow-700 font-medium">Pending Projects</span>
+      <span class="text-yellow-900 font-semibold"><%= @report[:pending_projects] %></span>
+    </li>
+
+    <li class="flex items-center justify-between p-4 bg-red-50 rounded-xl shadow-sm">
+      <span class="text-red-700 font-medium">Overdue Projects</span>
+      <span class="text-red-900 font-semibold"><%= @report[:overdue_projects] %></span>
+    </li>
+  </ul>
+</div>

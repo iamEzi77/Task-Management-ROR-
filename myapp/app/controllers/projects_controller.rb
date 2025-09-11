@@ -46,9 +46,9 @@ class ProjectsController < ApplicationController
       
       if @project.update(project_params)
         if current_user.admin?
-          redirect_to admin_dashboard_index_path, notice: "Project updated successfully."
+          redirect_to projects_path, notice: "Project updated successfully."
         else
-          redirect_to employee_dashboard_index_path, notice: "Project updated successfully."
+          redirect_to projects_path, notice: "Project updated successfully."
         end
       else
         render :edit

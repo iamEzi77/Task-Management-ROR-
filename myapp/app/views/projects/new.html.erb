@@ -34,8 +34,12 @@
 
 
     <div>
-      <%= f.label :user_id, "Assigned To", class: "block text-sm font-semibold text-gray-700" %>
-      <%= f.select :user_id, options_from_collection_for_select(@employees, :id, :name, @project.user_id), { prompt: "Select Employee" }, class: "w-full border rounded px-3 py-2 focus:ring focus:ring-blue-300" %>
+      <%= f.label :Roles, class: "block font-medium mb-1" %>
+      <%if @current_user.admin?%>
+        <%= f.select :user_id, options_from_collection_for_select(@employees, :id, :name), { prompt: "Select Employee" }, class: "w-full border rounded px-3 py-2 focus:ring focus:ring-blue-300" %>
+      <% else %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
+      <%end%>
     </div>
 
     <div class="flex items-center space-x-4">

@@ -6,7 +6,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :dashboard
-    # resources :tasks
+    resources :users
+    get "employee_report/:id", to: "dashboard#report_generator", as: :employee_report
+    get "all_employees", to: "dashboard#all_employees"
   end
 
   namespace :employee do

@@ -12,5 +12,15 @@ class User < ApplicationRecord
   def employee?
     role == 'employee'
   end
+
+
+  def performance_report
+    {
+      total_projects: projects.count,
+      completed_projects: projects.where(status: "completed").count,
+      pending_projects: projects.where.not(status: "completed").count,
+      overdue_projects: projects.where("due_date < ? AND status != ?", Date.today, "completed").count
+    }
+  end
    
 end

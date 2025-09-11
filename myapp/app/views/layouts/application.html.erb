@@ -43,20 +43,9 @@
       </div>
     </nav>
 
-    <div class="bg-gray-50 text-gray-900">
-        <div class="flex min-h-screen">
-          <% if user_signed_in? %>
-            <%= render "layouts/side_bar" %>
-          <% end %>
-
-          <main class="flex-1 mt-5 px-6 space-y-6">
-            <%= yield %>
-          </main>
-        </div>
-    </div>
-
-
-
+    <main class=" mt-5 px-3 space-y-6">
+      <%= yield %>
+    </main>
 
     <% if notice.present? %>
       <div class="mt-6 max-w-3xl mx-auto px-4 py-3 bg-green-100 text-green-800 border border-green-300 rounded-lg">

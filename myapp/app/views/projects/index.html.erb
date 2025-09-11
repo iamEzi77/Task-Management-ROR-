@@ -1,4 +1,13 @@
 <div class="flex min-h-screen bg-gray-100">
+  <aside class="w-64 bg-gray-800 text-white flex flex-col">
+    <div class="p-6 text-2xl font-bold border-b border-gray-700">
+      Admin Dashboard
+    </div>
+    <nav class="flex-1 p-4 space-y-4">
+      <%= link_to "Dashboard", admin_dashboard_index_path, class: "block px-4 py-2 rounded-lg hover:bg-gray-700 transition" %>
+      <%= link_to "Create Task", new_project_path, class: "block px-4 py-2 rounded-lg hover:bg-gray-700 transition" %>
+    </nav>
+  </aside>
 
   <main class="flex-1 p-8">
     <h1 class="text-2xl font-bold mb-6 text-gray-800">Search Project</h1>
@@ -16,14 +25,12 @@
             <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Category</th>
             <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Status</th>
             <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Due Date</th>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Assigned Employee</th>
             <th class="px-6 py-3 text-right text-sm font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 bg-white">
           <% @projects.each do |project| %>
             <tr class="hover:bg-gray-50 transition">
-            
               <td class="px-6 py-4 text-sm font-medium text-gray-900"><%= project.title %></td>
 
               <td class="px-6 py-4 text-sm text-gray-700 capitalize">
@@ -54,10 +61,6 @@
 
               <td class="px-6 py-4 text-sm text-gray-700">
                 <%= project.due_date.present? ? project.due_date.strftime("%B %d, %Y") : "Not set" %>
-              </td>
-
-              <td class="px-6 py-4 text-sm text-gray-700">
-                <%= project.employee&.name || "Unassigned" %>
               </td>
 
               <td class="px-6 py-4 text-right">

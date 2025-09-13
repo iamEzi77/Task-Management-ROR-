@@ -7,6 +7,15 @@ class Project < ApplicationRecord
 
   belongs_to :user 
 
+  validates :title, presence: true
+validates :description, presence: true
+validates :due_date, presence: true, comparison: { greater_than_or_equal_to: Date.today }
+validates :priority_level, presence: true
+validates :status, presence: true
+validates :category, presence: true, length: { minimum: 3, maximum: 50 }
+validates :user_id, presence: true
+validate :due_date_cannot_be_in_the_past
+
   scope :by_employee,   ->(id)    { where(user_id: id) if id.present? }
   scope :by_priority,   ->(level) { where(priority_level: level) if level.present? }
   scope :by_status,     ->(status){ where(status: status) if status.present? }
@@ -36,8 +45,8 @@ class Project < ApplicationRecord
   def self.search(params)
     projects = Project.all
 
-    if params[:kw].present?
-      keyword = "%#{sanitize_sql_like(params[:kw])}%"
+    if params[:search].present?
+      keyword = "%#{sanitize_sql_like(params[:search])}%"
       adapter = ActiveRecord::Base.connection.adapter_name.downcase.to_sym
       operator = adapter == :postgresql ? "ILIKE" : "LIKE"
 
@@ -59,6 +68,12 @@ class Project < ApplicationRecord
       self.status = "overdue"
     elsif status != "completed" 
       self.status = "pending"
+    end
+  end
+
+  def due_date_cannot_be_in_the_past
+    if due_date.present? && due_date < Date.today
+      errors.add(:due_date, "can't be in the past")
     end
   end
 

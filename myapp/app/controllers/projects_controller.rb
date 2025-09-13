@@ -2,9 +2,11 @@ class ProjectsController < ApplicationController
     before_action :authenticate_user!
     before_action :require_admin_or_employee
     before_action :set_employee, only: [:index, :new, :create, :edit]
+
+     helper ApplicationHelper
    def index
     if params[:search].present?
-      @projects = Project.search(params[:search])
+      @projects = Project.search(params)
     elsif params[:user_id].present? || params[:status].present? || params[:priority].present? ||
           params[:due_date].present? || params[:category].present? || params[:created_from].present? ||
           params[:created_to].present?
@@ -25,14 +27,12 @@ class ProjectsController < ApplicationController
     end
     def create
       @project = Project.new(project_params)
+      @project.user = current_user unless current_user.admin?
+
       if @project.save
-        if current_user.admin?
-          redirect_to projects_path, notice: "Project created successfully."
-        else
-          redirect_to projects_path, notice: "Project created successfully."
-        end
+        redirect_to @project, notice: "Project created successfully."
       else
-        render :new
+        render :new, status: :unprocessable_entity 
       end
     end
 
@@ -80,21 +80,21 @@ class ProjectsController < ApplicationController
     end
 
     def apply_sort(projects, sort_by, direction)
-  return projects unless sort_by.present?
+      return projects unless sort_by.present?
 
-  direction = %w[asc desc].include?(direction) ? direction : "asc"
+      direction = %w[asc desc].include?(direction) ? direction : "asc"
 
-  case sort_by
-  when "due_date"
-    projects.order(due_date: direction)
-  when "priority"
-    projects.order(priority_level: direction)
-  when "created_at"
-    projects.order(created_at: direction)
-  when "title"
-    projects.order(title: direction)
-  else
-    projects
-  end
-end
+      case sort_by
+      when "due_date"
+        projects.order(due_date: direction)
+      when "priority"
+        projects.order(priority_level: direction)
+      when "created_at"
+        projects.order(created_at: direction)
+      when "title"
+        projects.order(title: direction)
+      else
+        projects
+      end
+    end
 end

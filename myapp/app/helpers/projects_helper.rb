@@ -28,4 +28,5 @@ module ProjectsHelper
       content_tag(:span, priority.titleize, class: "px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800")
     end
   end
+
 end
